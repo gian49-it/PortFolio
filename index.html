@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="PortafoglioMio">
+<title>PortafoglioMio</title>
+<style>
+:root{--bg:#f4f6f8;--card:#fff;--text:#17212b;--muted:#6b7280;--line:#e5e7eb;--blue:#1769e0;--green:#16834b;--red:#c93636;--shadow:0 2px 12px rgba(0,0,0,.07)}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:80px}
+header{background:var(--card);padding:20px 16px 14px;position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line)}
+h1{font-size:24px;margin:0 0 12px}.tabs{display:flex;gap:8px;overflow:auto}.tab{border:0;background:#eef2f7;color:#39424e;padding:9px 13px;border-radius:18px;white-space:nowrap;font-weight:600}.tab.active{background:var(--blue);color:#fff}
+main{max-width:900px;margin:auto;padding:14px}.page{display:none}.page.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{background:var(--card);border-radius:16px;padding:16px;box-shadow:var(--shadow);margin-bottom:12px}.label{font-size:13px;color:var(--muted);margin-bottom:5px}.big{font-size:25px;font-weight:750}.green{color:var(--green)}.red{color:var(--red)}
+button,.btn{font:inherit}.primary{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:11px 14px;font-weight:700}.secondary{background:#eef2f7;border:0;border-radius:10px;padding:10px 13px}.danger{background:#fff0f0;color:var(--red);border:1px solid #ffd2d2;border-radius:9px;padding:7px 10px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.actions{display:flex;gap:8px;flex-wrap:wrap}.section-title{font-size:19px;font-weight:750;margin:8px 0 12px}
+form{display:grid;gap:10px}label{font-size:13px;color:var(--muted);font-weight:600}input,select{width:100%;padding:11px;border:1px solid #d6dbe1;border-radius:10px;background:#fff;font-size:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px 7px;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--muted);font-size:12px}
+.empty{color:var(--muted);text-align:center;padding:18px}.pill{display:inline-block;padding:4px 8px;border-radius:12px;background:#eef2f7;font-size:12px}
+.note{font-size:12px;color:var(--muted);line-height:1.4}.footer{font-size:12px;color:var(--muted);text-align:center;padding:20px}
+@media(max-width:600px){.grid{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}.big{font-size:21px}table{font-size:13px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>📊 PortafoglioMio</h1>
+  <div class="tabs">
+    <button class="tab active" data-page="home">Riepilogo</button>
+    <button class="tab" data-page="account">Conto corrente</button>
+    <button class="tab" data-page="securities">Titoli</button>
+    <button class="tab" data-page="movements">Movimenti titoli</button>
+  </div>
+</header>
+
+<main>
+<section id="home" class="page active">
+  <div class="section-title">Riepilogo</div>
+  <div class="grid">
+    <div class="card"><div class="label">Conto corrente</div><div id="sumCash" class="big">€ 0,00</div></div>
+    <div class="card"><div class="label">Valore titoli</div><div id="sumSecurities" class="big">€ 0,00</div></div>
+    <div class="card"><div class="label">Totale portafoglio</div><div id="sumTotal" class="big">€ 0,00</div></div>
+    <div class="card"><div class="label">Risultato titoli</div><div id="sumProfit" class="big">€ 0,00</div></div>
+  </div>
+  <div class="card">
+    <div class="section-title">Rendimenti</div>
+    <div class="grid">
+      <div><div class="label">3 mesi</div><div id="ret3" class="big">—</div></div>
+      <div><div class="label">6 mesi</div><div id="ret6" class="big">—</div></div>
+      <div><div class="label">1 anno</div><div id="ret12" class="big">—</div></div>
+    </div>
+    <p class="note">I rendimenti sono calcolati confrontando il valore attuale con una fotografia del patrimonio salvata dall'app all'inizio del periodo. Le percentuali diventano disponibili quando esiste una fotografia risalente all'inizio del relativo periodo. I prezzi dei titoli restano inseriti manualmente.</p>
+  </div>
+  <div class="card">
+    <div class="row"><div class="section-title">Dati</div><div class="actions"><button class="secondary" onclick="exportData()">Esporta</button><button class="secondary" onclick="importData()">Importa</button><button class="danger" onclick="resetAll()">Cancella tutto</button></div></div>
+    <p class="note">I dati sono salvati localmente nel browser/iPhone. Usa “Esporta” per conservarne una copia.</p>
+  </div>
+</section>
+
+<section id="account" class="page">
+  <div class="section-title">Conto corrente</div>
+  <div class="card"><div class="label">Saldo attuale</div><div id="accountBalance" class="big">€ 0,00</div></div>
+  <div class="card">
+    <form id="accountForm">
+      <div class="two"><div><label>Data</label><input id="aDate" type="date" required></div><div><label>Tipo</label><select id="aType"><option value="in">Entrata</option><option value="out">Uscita</option></select></div></div>
+      <div><label>Descrizione</label><input id="aDesc" placeholder="Es. Stipendio, bonifico, spesa" required></div>
+      <div><label>Importo (€)</label><input id="aAmount" type="number" step="0.01" min="0" required></div>
+      <button class="primary">Aggiungi movimento</button>
+    </form>
+  </div>
+  <div class="card"><div class="section-title">Storico conto</div><div id="accountTable"></div></div>
+</section>
+
+<section id="securities" class="page">
+  <div class="section-title">Titoli</div>
+  <div class="card">
+    <form id="securityForm">
+      <div class="two"><div><label>Nome titolo</label><input id="sName" placeholder="Es. BTP 2030" required></div><div><label>ISIN (facoltativo)</label><input id="sIsin" placeholder="IT0000000000"></div></div>
+      <div class="two"><div><label>Quantità</label><input id="sQty" type="number" step="0.0001" min="0" required></div><div><label>Prezzo di acquisto (€)</label><input id="sBuy" type="number" step="0.0001" min="0" required></div></div>
+      <div class="two"><div><label>Prezzo attuale (€)</label><input id="sCurrent" type="number" step="0.0001" min="0" required></div><div><label>Data acquisto</label><input id="sDate" type="date" required></div></div>
+      <button class="primary">Aggiungi titolo</button>
+    </form>
+  </div>
+  <div class="card"><div id="securityTable"></div></div>
+</section>
+
+<section id="movements" class="page">
+  <div class="section-title">Movimenti titoli</div>
+  <div class="card">
+    <form id="movementForm">
+      <div class="two"><div><label>Data</label><input id="mDate" type="date" required></div><div><label>Titolo</label><select id="mSecurity" required></select></div></div>
+      <div class="two"><div><label>Tipo</label><select id="mType"><option>Acquisto</option><option>Vendita</option><option>Dividendo</option><option>Commissione</option></select></div><div><label>Quantità</label><input id="mQty" type="number" step="0.0001" min="0" value="0"></div></div>
+      <div class="two"><div><label>Prezzo (€)</label><input id="mPrice" type="number" step="0.0001" min="0" value="0"></div><div><label>Importo (€)</label><input id="mAmount" type="number" step="0.01" min="0" required></div></div>
+      <button class="primary">Aggiungi movimento</button>
+    </form>
+  </div>
+  <div class="card"><div id="movementTable"></div></div>
+</section>
+</main>
+<div class="footer">PortafoglioMio • versione 1.0 • dati salvati sul dispositivo</div>
+
+<script>
+const KEY="portafoglioMio_v1";
+let data={account:[],securities:[],movements:[],snapshots:[]};
+const euro=n=>new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'}).format(Number(n)||0);
+const pct=n=>(Number.isFinite(n)?(n>=0?'+':'')+n.toFixed(2)+'%':'—');
+const today=()=>new Date().toISOString().slice(0,10);
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render();}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(b.dataset.page).classList.add('active');render();});
+['aDate','sDate','mDate'].forEach(id=>document.getElementById(id).value=today());
+
+document.getElementById('accountForm').onsubmit=e=>{e.preventDefault();data.account.push({id:Date.now(),date:aDate.value,type:aType.value,desc:aDesc.value,amount:+aAmount.value});e.target.reset();aDate.value=today();save();};
+document.getElementById('securityForm').onsubmit=e=>{e.preventDefault();data.securities.push({id:Date.now(),name:sName.value,isin:sIsin.value,qty:+sQty.value,buy:+sBuy.value,current:+sCurrent.value,date:sDate.value});e.target.reset();sDate.value=today();save();};
+document.getElementById('movementForm').onsubmit=e=>{e.preventDefault();data.movements.push({id:Date.now(),date:mDate.value,sid:+mSecurity.value,type:mType.value,qty:+mQty.value,price:+mPrice.value,amount:+mAmount.value});e.target.reset();mDate.value=today();save();};
+
+function removeItem(kind,id){if(confirm('Eliminare questo elemento?')){data[kind]=data[kind].filter(x=>x.id!==id);save();}}
+function renderAccount(){
+ let bal=data.account.reduce((s,x)=>s+(x.type==='in'?x.amount:-x.amount),0);accountBalance.textContent=euro(bal);
+ let a=[...data.account].sort((x,y)=>y.date.localeCompare(x.date));
+ accountTable.innerHTML=a.length?`<div class="table-wrap"><table><thead><tr><th>Data</th><th>Descrizione</th><th>Tipo</th><th>Importo</th><th></th></tr></thead><tbody>${a.map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.desc)}</td><td>${x.type==='in'?'Entrata':'Uscita'}</td><td class="${x.type==='in'?'green':'red'}">${x.type==='in'?'+':'−'}${euro(x.amount)}</td><td><button class="danger" onclick="removeItem('account',${x.id})">×</button></td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">Nessun movimento registrato.</div>';
+}
+function renderSecurities(){
+ let total=0,profit=0;
+ securityTable.innerHTML=data.securities.length?`<div class="table-wrap"><table><thead><tr><th>Titolo</th><th>Qtà</th><th>Acquisto</th><th>Attuale</th><th>Valore</th><th>Risultato</th><th></th></tr></thead><tbody>${data.securities.map(x=>{let v=x.qty*x.current,p=x.qty*x.buy,pr=v-p;total+=v;profit+=pr;return `<tr><td><b>${esc(x.name)}</b><br><span class="pill">${esc(x.isin||'senza ISIN')}</span></td><td>${x.qty}</td><td>${euro(x.buy)}</td><td>${euro(x.current)}</td><td>${euro(v)}</td><td class="${pr>=0?'green':'red'}">${euro(pr)}<br>${pct(p?pr/p*100:NaN)}</td><td><button class="danger" onclick="removeItem('securities',${x.id})">×</button></td></tr>`}).join('')}</tbody></table></div>`:'<div class="empty">Nessun titolo inserito.</div>';
+ return {total,profit};
+}
+function renderMovements(){
+ mSecurity.innerHTML=data.securities.length?data.securities.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join(''):'<option value="">Prima inserisci un titolo</option>';
+ let a=[...data.movements].sort((x,y)=>y.date.localeCompare(x.date));
+ movementTable.innerHTML=a.length?`<div class="table-wrap"><table><thead><tr><th>Data</th><th>Titolo</th><th>Tipo</th><th>Qtà</th><th>Prezzo</th><th>Importo</th><th></th></tr></thead><tbody>${a.map(x=>{let s=data.securities.find(z=>z.id===x.sid);return `<tr><td>${esc(x.date)}</td><td>${esc(s?s.name:'Titolo eliminato')}</td><td>${esc(x.type)}</td><td>${x.qty}</td><td>${euro(x.price)}</td><td>${euro(x.amount)}</td><td><button class="danger" onclick="removeItem('movements',${x.id})">×</button></td></tr>`}).join('')}</tbody></table></div>`:'<div class="empty">Nessun movimento di titoli.</div>';
+}
+function portfolioValue(){
+  const cash=data.account.reduce((s,x)=>s+(x.type==='in'?x.amount:-x.amount),0);
+  const securities=data.securities.reduce((s,x)=>s+x.qty*x.current,0);
+  return cash+securities;
+}
+function recordSnapshot(){
+  const d=today(), v=portfolioValue();
+  data.snapshots=data.snapshots||[];
+  const i=data.snapshots.findIndex(x=>x.date===d);
+  if(i>=0) data.snapshots[i].value=v;
+  else data.snapshots.push({date:d,value:v});
+  const cut=new Date(); cut.setMonth(cut.getMonth()-18);
+  data.snapshots=data.snapshots.filter(x=>new Date(x.date)>=cut);
+  localStorage.setItem(KEY,JSON.stringify(data));
+}
+function periodReturn(months){
+  const snaps=(data.snapshots||[]).sort((a,b)=>a.date.localeCompare(b.date));
+  if(!snaps.length)return NaN;
+  const start=new Date(); start.setMonth(start.getMonth()-months);
+  const startStr=start.toISOString().slice(0,10);
+  const before=snaps.filter(x=>x.date<=startStr).pop();
+  if(!before || before.value===0)return NaN;
+  return (portfolioValue()/before.value-1)*100;
+}
+function render(){
+ recordSnapshot();
+ const acc=data.account.reduce((s,x)=>s+(x.type==='in'?x.amount:-x.amount),0);
+ const s=renderSecurities(); renderAccount(); renderMovements();
+ sumCash.textContent=euro(acc);sumSecurities.textContent=euro(s.total);sumTotal.textContent=euro(acc+s.total);sumProfit.textContent=euro(s.profit);
+ [[ret3,3],[ret6,6],[ret12,12]].forEach(([el,m])=>{let r=periodReturn(m);el.textContent=pct(r);el.className='big '+(r>=0?'green':r<0?'red':'');});
+}
+function exportData(){const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='PortafoglioMio-backup.json';a.click();URL.revokeObjectURL(a.href);}
+function importData(){const i=document.createElement('input');i.type='file';i.accept='.json,application/json';i.onchange=()=>{const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(!d.account||!d.securities||!d.movements)throw 0;d.snapshots=d.snapshots||[];data=d;save();alert('Dati importati.');}catch{alert('File non valido.');}};r.readAsText(f)};i.click();}
+function resetAll(){if(confirm('ATTENZIONE: verranno cancellati tutti i dati. Continuare?')){data={account:[],securities:[],movements:[],snapshots:[]};save();}}
+render();
+</script>
+</body>
+</html>
