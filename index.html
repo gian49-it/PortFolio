@@ -1,171 +1,1582 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="PortafoglioMio">
+<meta name="theme-color" content="#f5f5f7">
 <title>PortafoglioMio</title>
+
 <style>
-:root{--bg:#f4f6f8;--card:#fff;--text:#17212b;--muted:#6b7280;--line:#e5e7eb;--blue:#1769e0;--green:#16834b;--red:#c93636;--shadow:0 2px 12px rgba(0,0,0,.07)}
-*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:80px}
-header{background:var(--card);padding:20px 16px 14px;position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line)}
-h1{font-size:24px;margin:0 0 12px}.tabs{display:flex;gap:8px;overflow:auto}.tab{border:0;background:#eef2f7;color:#39424e;padding:9px 13px;border-radius:18px;white-space:nowrap;font-weight:600}.tab.active{background:var(--blue);color:#fff}
-main{max-width:900px;margin:auto;padding:14px}.page{display:none}.page.active{display:block}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{background:var(--card);border-radius:16px;padding:16px;box-shadow:var(--shadow);margin-bottom:12px}.label{font-size:13px;color:var(--muted);margin-bottom:5px}.big{font-size:25px;font-weight:750}.green{color:var(--green)}.red{color:var(--red)}
-button,.btn{font:inherit}.primary{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:11px 14px;font-weight:700}.secondary{background:#eef2f7;border:0;border-radius:10px;padding:10px 13px}.danger{background:#fff0f0;color:var(--red);border:1px solid #ffd2d2;border-radius:9px;padding:7px 10px}
-.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.actions{display:flex;gap:8px;flex-wrap:wrap}.section-title{font-size:19px;font-weight:750;margin:8px 0 12px}
-form{display:grid;gap:10px}label{font-size:13px;color:var(--muted);font-weight:600}input,select{width:100%;padding:11px;border:1px solid #d6dbe1;border-radius:10px;background:#fff;font-size:16px}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px 7px;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--muted);font-size:12px}
-.empty{color:var(--muted);text-align:center;padding:18px}.pill{display:inline-block;padding:4px 8px;border-radius:12px;background:#eef2f7;font-size:12px}
-.note{font-size:12px;color:var(--muted);line-height:1.4}.footer{font-size:12px;color:var(--muted);text-align:center;padding:20px}
-@media(max-width:600px){.grid{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}.big{font-size:21px}table{font-size:13px}}
+:root{
+  --bg:#f5f5f7;
+  --card:#ffffff;
+  --text:#1d1d1f;
+  --muted:#6e6e73;
+  --line:#dddde2;
+  --accent:#007aff;
+  --good:#188038;
+  --bad:#d93025;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+header{
+  padding:calc(18px + env(safe-area-inset-top)) 16px 14px;
+  background:var(--card);
+  position:sticky;
+  top:0;
+  z-index:5;
+  border-bottom:1px solid var(--line);
+}
+
+h1{
+  font-size:26px;
+  margin:0 0 12px;
+}
+
+h2{
+  font-size:21px;
+  margin:0 0 14px;
+}
+
+.tabs{
+  display:flex;
+  gap:7px;
+  overflow:auto;
+}
+
+.tabs button{
+  border:0;
+  background:#e9e9ee;
+  padding:9px 13px;
+  border-radius:18px;
+  white-space:nowrap;
+  font-weight:600;
+}
+
+.tabs button.active{
+  background:var(--accent);
+  color:#fff;
+}
+
+main{
+  max-width:900px;
+  margin:auto;
+  padding:16px 14px 40px;
+}
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:14px;
+  box-shadow:0 1px 2px #00000008;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+
+@media(min-width:700px){
+  .grid{
+    grid-template-columns:repeat(4,1fr);
+  }
+}
+
+label{
+  font-size:13px;
+  color:var(--muted);
+  display:block;
+  margin-bottom:5px;
+}
+
+input,select,button{
+  font:inherit;
+}
+
+input,select{
+  width:100%;
+  padding:11px;
+  border:1px solid #c9c9ce;
+  border-radius:10px;
+  background:#fff;
+}
+
+button.primary{
+  background:var(--accent);
+  color:#fff;
+  border:0;
+  border-radius:10px;
+  padding:11px 16px;
+  font-weight:700;
+}
+
+.actions{
+  margin-top:14px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.metric{
+  font-size:24px;
+  font-weight:750;
+}
+
+.muted{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.good{
+  color:var(--good);
+}
+
+.bad{
+  color:var(--bad);
+}
+
+.metrics{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+
+@media(min-width:700px){
+  .metrics{
+    grid-template-columns:repeat(4,1fr);
+  }
+}
+
+.metricbox{
+  background:#f8f8fa;
+  border-radius:12px;
+  padding:13px;
+}
+
+.metricbox small{
+  display:block;
+  color:var(--muted);
+  margin-bottom:5px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+}
+
+th,td{
+  text-align:left;
+  padding:9px 6px;
+  border-bottom:1px solid var(--line);
+  vertical-align:top;
+}
+
+th{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.tablewrap{
+  overflow:auto;
+}
+
+.empty{
+  padding:18px 4px;
+  color:var(--muted);
+  text-align:center;
+}
+
+.notice{
+  background:#fff8df;
+  border:1px solid #f0d36b;
+  border-radius:12px;
+  padding:11px;
+  font-size:13px;
+  margin-bottom:12px;
+}
+
+.danger{
+  background:#fff;
+  border:1px solid #e5b7b3;
+  color:var(--bad);
+  border-radius:10px;
+  padding:10px;
+}
+
+.smallbtn{
+  border:0;
+  border-radius:8px;
+  padding:6px 9px;
+  background:#ececf1;
+}
+
+footer{
+  color:var(--muted);
+  text-align:center;
+  font-size:12px;
+  margin-top:20px;
+}
 </style>
 </head>
+
 <body>
+
 <header>
-  <h1>📊 PortafoglioMio</h1>
-  <div class="tabs">
-    <button class="tab active" data-page="home">Riepilogo</button>
-    <button class="tab" data-page="account">Conto corrente</button>
-    <button class="tab" data-page="securities">Titoli</button>
-    <button class="tab" data-page="movements">Movimenti titoli</button>
-  </div>
+
+<h1>PortafoglioMio</h1>
+
+<div class="tabs">
+<button class="active" data-tab="home">Riepilogo</button>
+<button data-tab="cash">Conto corrente</button>
+<button data-tab="securities">Titoli</button>
+<button data-tab="moves">Movimenti titoli</button>
+</div>
+
 </header>
 
 <main>
-<section id="home" class="page active">
-  <div class="section-title">Riepilogo</div>
-  <div class="grid">
-    <div class="card"><div class="label">Conto corrente</div><div id="sumCash" class="big">€ 0,00</div></div>
-    <div class="card"><div class="label">Valore titoli</div><div id="sumSecurities" class="big">€ 0,00</div></div>
-    <div class="card"><div class="label">Totale portafoglio</div><div id="sumTotal" class="big">€ 0,00</div></div>
-    <div class="card"><div class="label">Risultato titoli</div><div id="sumProfit" class="big">€ 0,00</div></div>
-  </div>
-  <div class="card">
-    <div class="section-title">Rendimenti</div>
-    <div class="grid">
-      <div><div class="label">3 mesi</div><div id="ret3" class="big">—</div></div>
-      <div><div class="label">6 mesi</div><div id="ret6" class="big">—</div></div>
-      <div><div class="label">1 anno</div><div id="ret12" class="big">—</div></div>
-    </div>
-    <p class="note">I rendimenti sono calcolati confrontando il valore attuale con una fotografia del patrimonio salvata dall'app all'inizio del periodo. Le percentuali diventano disponibili quando esiste una fotografia risalente all'inizio del relativo periodo. I prezzi dei titoli restano inseriti manualmente.</p>
-  </div>
-  <div class="card">
-    <div class="row"><div class="section-title">Dati</div><div class="actions"><button class="secondary" onclick="exportData()">Esporta</button><button class="secondary" onclick="importData()">Importa</button><button class="danger" onclick="resetAll()">Cancella tutto</button></div></div>
-    <p class="note">I dati sono salvati localmente nel browser/iPhone. Usa “Esporta” per conservarne una copia.</p>
-  </div>
+
+<section id="home" class="section active">
+
+<div class="card">
+
+<h2>Riepilogo</h2>
+
+<div class="metrics">
+
+<div class="metricbox">
+<small>Conto corrente</small>
+<div id="mCash" class="metric">€ 0,00</div>
+</div>
+
+<div class="metricbox">
+<small>Valore titoli</small>
+<div id="mSecurities" class="metric">€ 0,00</div>
+</div>
+
+<div class="metricbox">
+<small>Patrimonio</small>
+<div id="mTotal" class="metric">€ 0,00</div>
+</div>
+
+<div class="metricbox">
+<small>Risultato titoli</small>
+<div id="mGain" class="metric">€ 0,00</div>
+</div>
+
+</div>
+</div>
+
+<div class="card">
+
+<h2>Rendimenti</h2>
+
+<div class="metrics">
+
+<div class="metricbox">
+<small>3 mesi</small>
+<div id="r3" class="metric">—</div>
+</div>
+
+<div class="metricbox">
+<small>6 mesi</small>
+<div id="r6" class="metric">—</div>
+</div>
+
+<div class="metricbox">
+<small>12 mesi</small>
+<div id="r12" class="metric">—</div>
+</div>
+
+<div class="metricbox">
+<small>Movimenti</small>
+<div id="mMoves" class="metric">0</div>
+</div>
+
+</div>
+
+<p class="muted">
+I rendimenti sono indicativi e basati sui movimenti registrati.
+Per un calcolo storico preciso servono valori del portafoglio rilevati nel tempo.
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>Posizioni</h2>
+
+<div id="summarySecurities" class="tablewrap"></div>
+
+</div>
+
+<div class="card">
+
+<h2>Backup</h2>
+
+<p class="muted">
+Esporta una copia dei dati prima di modifiche importanti o per trasferirli su un altro dispositivo.
+</p>
+
+<div class="actions">
+
+<button class="primary" onclick="exportData()">
+Esporta dati
+</button>
+
+<label style="display:inline-block">
+<span class="smallbtn">Importa dati</span>
+<input id="importFile" type="file" accept=".json" style="display:none" onchange="importData(event)">
+</label>
+
+<button class="danger" onclick="resetAll()">
+Cancella tutti i dati
+</button>
+
+</div>
+</div>
+
 </section>
 
-<section id="account" class="page">
-  <div class="section-title">Conto corrente</div>
-  <div class="card"><div class="label">Saldo attuale</div><div id="accountBalance" class="big">€ 0,00</div></div>
-  <div class="card">
-    <form id="accountForm">
-      <div class="two"><div><label>Data</label><input id="aDate" type="date" required></div><div><label>Tipo</label><select id="aType"><option value="in">Entrata</option><option value="out">Uscita</option></select></div></div>
-      <div><label>Descrizione</label><input id="aDesc" placeholder="Es. Stipendio, bonifico, spesa" required></div>
-      <div><label>Importo (€)</label><input id="aAmount" type="number" step="0.01" min="0" required></div>
-      <button class="primary">Aggiungi movimento</button>
-    </form>
-  </div>
-  <div class="card"><div class="section-title">Storico conto</div><div id="accountTable"></div></div>
+
+<section id="cash" class="section">
+
+<div class="card">
+
+<h2>Conto corrente</h2>
+
+<form id="cashForm">
+
+<div class="grid">
+
+<div>
+<label>Data</label>
+<input id="cashDate" type="date" required>
+</div>
+
+<div>
+<label>Tipo</label>
+<select id="cashType">
+<option value="in">Entrata</option>
+<option value="out">Uscita</option>
+</select>
+</div>
+
+<div>
+<label>Descrizione</label>
+<input id="cashDesc" placeholder="es. Stipendio" required>
+</div>
+
+<div>
+<label>Importo (€)</label>
+<input id="cashAmount" type="number" min="0" step="0.01" required>
+</div>
+
+</div>
+
+<div class="actions">
+<button class="primary">Registra movimento</button>
+</div>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>Saldo</h2>
+
+<div id="cashBalance" class="metric">
+€ 0,00
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Storico conto</h2>
+
+<div id="cashHistory" class="tablewrap"></div>
+
+</div>
+
 </section>
 
-<section id="securities" class="page">
-  <div class="section-title">Titoli</div>
-  <div class="card">
-    <form id="securityForm">
-      <div class="two"><div><label>Nome titolo</label><input id="sName" placeholder="Es. BTP 2030" required></div><div><label>ISIN (facoltativo)</label><input id="sIsin" placeholder="IT0000000000"></div></div>
-      <div class="two"><div><label>Quantità</label><input id="sQty" type="number" step="0.0001" min="0" required></div><div><label>Prezzo di acquisto (€)</label><input id="sBuy" type="number" step="0.0001" min="0" required></div></div>
-      <div class="two"><div><label>Prezzo attuale (€)</label><input id="sCurrent" type="number" step="0.0001" min="0" required></div><div><label>Data acquisto</label><input id="sDate" type="date" required></div></div>
-      <button class="primary">Aggiungi titolo</button>
-    </form>
-  </div>
-  <div class="card"><div id="securityTable"></div></div>
+
+<section id="securities" class="section">
+
+<div class="card">
+
+<h2>Aggiungi titolo</h2>
+
+<div class="notice">
+La quantità inserita qui è la quantità iniziale posseduta.
+Gli acquisti e le vendite successivi la aggiorneranno automaticamente.
+</div>
+
+<form id="secForm">
+
+<div class="grid">
+
+<div>
+<label>Nome titolo</label>
+<input id="secName" placeholder="es. ENI" required>
+</div>
+
+<div>
+<label>ISIN</label>
+<input id="secIsin" placeholder="es. IT0003132476">
+</div>
+
+<div>
+<label>Quantità iniziale</label>
+<input id="secQty" type="number" min="0" step="0.000001" required>
+</div>
+
+<div>
+<label>Prezzo medio di carico (€)</label>
+<input id="secBuy" type="number" min="0" step="0.0001" required>
+</div>
+
+<div>
+<label>Prezzo attuale (€)</label>
+<input id="secCurrent" type="number" min="0" step="0.0001" required>
+</div>
+
+<div>
+<label>Data di carico</label>
+<input id="secDate" type="date" required>
+</div>
+
+</div>
+
+<div class="actions">
+<button class="primary">Salva titolo</button>
+</div>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>Portafoglio titoli</h2>
+
+<div id="securityTable" class="tablewrap"></div>
+
+</div>
+
 </section>
 
-<section id="movements" class="page">
-  <div class="section-title">Movimenti titoli</div>
-  <div class="card">
-    <form id="movementForm">
-      <div class="two"><div><label>Data</label><input id="mDate" type="date" required></div><div><label>Titolo</label><select id="mSecurity" required></select></div></div>
-      <div class="two"><div><label>Tipo</label><select id="mType"><option>Acquisto</option><option>Vendita</option><option>Dividendo</option><option>Commissione</option></select></div><div><label>Quantità</label><input id="mQty" type="number" step="0.0001" min="0" value="0"></div></div>
-      <div class="two"><div><label>Prezzo (€)</label><input id="mPrice" type="number" step="0.0001" min="0" value="0"></div><div><label>Importo (€)</label><input id="mAmount" type="number" step="0.01" min="0" required></div></div>
-      <button class="primary">Aggiungi movimento</button>
-    </form>
-  </div>
-  <div class="card"><div id="movementTable"></div></div>
+
+<section id="moves" class="section">
+
+<div class="card">
+
+<h2>Movimento titolo</h2>
+
+<div class="notice">
+Acquisto, vendita, dividendo e commissione aggiornano automaticamente il conto corrente.
+Acquisti e vendite aggiornano anche la quantità del titolo.
+</div>
+
+<form id="moveForm">
+
+<div class="grid">
+
+<div>
+<label>Data</label>
+<input id="moveDate" type="date" required>
+</div>
+
+<div>
+<label>Titolo</label>
+<select id="moveSecurity" required></select>
+</div>
+
+<div>
+<label>Tipo</label>
+
+<select id="moveType">
+
+<option>Acquisto</option>
+<option>Vendita</option>
+<option>Dividendo</option>
+<option>Commissione</option>
+
+</select>
+
+</div>
+
+<div>
+<label>Quantità</label>
+<input id="moveQty" type="number" min="0" step="0.000001">
+</div>
+
+<div>
+<label>Prezzo (€)</label>
+<input id="movePrice" type="number" min="0" step="0.0001">
+</div>
+
+<div>
+<label>Importo (€)</label>
+<input id="moveAmount" type="number" min="0" step="0.01">
+</div>
+
+</div>
+
+<p class="muted">
+Per acquisto/vendita puoi indicare quantità e prezzo:
+l'importo viene calcolato automaticamente.
+Per dividendo o commissione inserisci direttamente l'importo.
+</p>
+
+<div class="actions">
+<button class="primary">Registra movimento</button>
+</div>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>Storico movimenti</h2>
+
+<div id="moveTable" class="tablewrap"></div>
+
+</div>
+
 </section>
+
+<footer>
+PortafoglioMio · dati salvati localmente sul dispositivo
+</footer>
+
 </main>
-<div class="footer">PortafoglioMio • versione 1.0 • dati salvati sul dispositivo</div>
+
 
 <script>
-const KEY="portafoglioMio_v1";
-let data={account:[],securities:[],movements:[],snapshots:[]};
-const euro=n=>new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'}).format(Number(n)||0);
-const pct=n=>(Number.isFinite(n)?(n>=0?'+':'')+n.toFixed(2)+'%':'—');
-const today=()=>new Date().toISOString().slice(0,10);
-function save(){localStorage.setItem(KEY,JSON.stringify(data));render();}
-function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
-document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(b.dataset.page).classList.add('active');render();});
-['aDate','sDate','mDate'].forEach(id=>document.getElementById(id).value=today());
 
-document.getElementById('accountForm').onsubmit=e=>{e.preventDefault();data.account.push({id:Date.now(),date:aDate.value,type:aType.value,desc:aDesc.value,amount:+aAmount.value});e.target.reset();aDate.value=today();save();};
-document.getElementById('securityForm').onsubmit=e=>{e.preventDefault();data.securities.push({id:Date.now(),name:sName.value,isin:sIsin.value,qty:+sQty.value,buy:+sBuy.value,current:+sCurrent.value,date:sDate.value});e.target.reset();sDate.value=today();save();};
-document.getElementById('movementForm').onsubmit=e=>{e.preventDefault();data.movements.push({id:Date.now(),date:mDate.value,sid:+mSecurity.value,type:mType.value,qty:+mQty.value,price:+mPrice.value,amount:+mAmount.value});e.target.reset();mDate.value=today();save();};
+const KEY='portafoglioMio_v2';
 
-function removeItem(kind,id){if(confirm('Eliminare questo elemento?')){data[kind]=data[kind].filter(x=>x.id!==id);save();}}
-function renderAccount(){
- let bal=data.account.reduce((s,x)=>s+(x.type==='in'?x.amount:-x.amount),0);accountBalance.textContent=euro(bal);
- let a=[...data.account].sort((x,y)=>y.date.localeCompare(x.date));
- accountTable.innerHTML=a.length?`<div class="table-wrap"><table><thead><tr><th>Data</th><th>Descrizione</th><th>Tipo</th><th>Importo</th><th></th></tr></thead><tbody>${a.map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.desc)}</td><td>${x.type==='in'?'Entrata':'Uscita'}</td><td class="${x.type==='in'?'green':'red'}">${x.type==='in'?'+':'−'}${euro(x.amount)}</td><td><button class="danger" onclick="removeItem('account',${x.id})">×</button></td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">Nessun movimento registrato.</div>';
+let data=load();
+
+
+function load(){
+
+try{
+
+const x=JSON.parse(localStorage.getItem(KEY));
+
+if(
+x &&
+Array.isArray(x.cash) &&
+Array.isArray(x.securities) &&
+Array.isArray(x.movements)
+)
+return x;
+
+}catch(e){}
+
+return {
+cash:[],
+securities:[],
+movements:[]
+};
+
 }
-function renderSecurities(){
- let total=0,profit=0;
- securityTable.innerHTML=data.securities.length?`<div class="table-wrap"><table><thead><tr><th>Titolo</th><th>Qtà</th><th>Acquisto</th><th>Attuale</th><th>Valore</th><th>Risultato</th><th></th></tr></thead><tbody>${data.securities.map(x=>{let v=x.qty*x.current,p=x.qty*x.buy,pr=v-p;total+=v;profit+=pr;return `<tr><td><b>${esc(x.name)}</b><br><span class="pill">${esc(x.isin||'senza ISIN')}</span></td><td>${x.qty}</td><td>${euro(x.buy)}</td><td>${euro(x.current)}</td><td>${euro(v)}</td><td class="${pr>=0?'green':'red'}">${euro(pr)}<br>${pct(p?pr/p*100:NaN)}</td><td><button class="danger" onclick="removeItem('securities',${x.id})">×</button></td></tr>`}).join('')}</tbody></table></div>`:'<div class="empty">Nessun titolo inserito.</div>';
- return {total,profit};
-}
-function renderMovements(){
- mSecurity.innerHTML=data.securities.length?data.securities.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join(''):'<option value="">Prima inserisci un titolo</option>';
- let a=[...data.movements].sort((x,y)=>y.date.localeCompare(x.date));
- movementTable.innerHTML=a.length?`<div class="table-wrap"><table><thead><tr><th>Data</th><th>Titolo</th><th>Tipo</th><th>Qtà</th><th>Prezzo</th><th>Importo</th><th></th></tr></thead><tbody>${a.map(x=>{let s=data.securities.find(z=>z.id===x.sid);return `<tr><td>${esc(x.date)}</td><td>${esc(s?s.name:'Titolo eliminato')}</td><td>${esc(x.type)}</td><td>${x.qty}</td><td>${euro(x.price)}</td><td>${euro(x.amount)}</td><td><button class="danger" onclick="removeItem('movements',${x.id})">×</button></td></tr>`}).join('')}</tbody></table></div>`:'<div class="empty">Nessun movimento di titoli.</div>';
-}
-function portfolioValue(){
-  const cash=data.account.reduce((s,x)=>s+(x.type==='in'?x.amount:-x.amount),0);
-  const securities=data.securities.reduce((s,x)=>s+x.qty*x.current,0);
-  return cash+securities;
-}
-function recordSnapshot(){
-  const d=today(), v=portfolioValue();
-  data.snapshots=data.snapshots||[];
-  const i=data.snapshots.findIndex(x=>x.date===d);
-  if(i>=0) data.snapshots[i].value=v;
-  else data.snapshots.push({date:d,value:v});
-  const cut=new Date(); cut.setMonth(cut.getMonth()-18);
-  data.snapshots=data.snapshots.filter(x=>new Date(x.date)>=cut);
-  localStorage.setItem(KEY,JSON.stringify(data));
-}
-function periodReturn(months){
-  const snaps=(data.snapshots||[]).sort((a,b)=>a.date.localeCompare(b.date));
-  if(!snaps.length)return NaN;
-  const start=new Date(); start.setMonth(start.getMonth()-months);
-  const startStr=start.toISOString().slice(0,10);
-  const before=snaps.filter(x=>x.date<=startStr).pop();
-  if(!before || before.value===0)return NaN;
-  return (portfolioValue()/before.value-1)*100;
-}
-function render(){
- recordSnapshot();
- const acc=data.account.reduce((s,x)=>s+(x.type==='in'?x.amount:-x.amount),0);
- const s=renderSecurities(); renderAccount(); renderMovements();
- sumCash.textContent=euro(acc);sumSecurities.textContent=euro(s.total);sumTotal.textContent=euro(acc+s.total);sumProfit.textContent=euro(s.profit);
- [[ret3,3],[ret6,6],[ret12,12]].forEach(([el,m])=>{let r=periodReturn(m);el.textContent=pct(r);el.className='big '+(r>=0?'green':r<0?'red':'');});
-}
-function exportData(){const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='PortafoglioMio-backup.json';a.click();URL.revokeObjectURL(a.href);}
-function importData(){const i=document.createElement('input');i.type='file';i.accept='.json,application/json';i.onchange=()=>{const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(!d.account||!d.securities||!d.movements)throw 0;d.snapshots=d.snapshots||[];data=d;save();alert('Dati importati.');}catch{alert('File non valido.');}};r.readAsText(f)};i.click();}
-function resetAll(){if(confirm('ATTENZIONE: verranno cancellati tutti i dati. Continuare?')){data={account:[],securities:[],movements:[],snapshots:[]};save();}}
+
+
+function save(){
+
+localStorage.setItem(KEY,JSON.stringify(data));
+
 render();
+
+}
+
+
+function money(n){
+
+return new Intl.NumberFormat(
+'it-IT',
+{
+style:'currency',
+currency:'EUR'
+}
+).format(Number(n)||0);
+
+}
+
+
+function num(n){
+
+return Number(n)||0;
+
+}
+
+
+function today(){
+
+return new Date().toISOString().slice(0,10);
+
+}
+
+
+function esc(s){
+
+return String(s??'').replace(
+/[&<>"']/g,
+c=>({
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;',
+"'":'&#039;'
+}[c])
+);
+
+}
+
+
+function fmtDate(s){
+
+if(!s)return '';
+
+const p=s.split('-');
+
+return p.length===3
+?`${p[2]}/${p[1]}/${p[0]}`
+:s;
+
+}
+
+
+function uid(){
+
+return Date.now().toString(36)+
+Math.random().toString(36).slice(2,7);
+
+}
+
+
+document.querySelectorAll('.tabs button').forEach(b=>{
+
+b.onclick=()=>{
+
+document.querySelectorAll('.tabs button')
+.forEach(x=>x.classList.remove('active'));
+
+document.querySelectorAll('.section')
+.forEach(x=>x.classList.remove('active'));
+
+b.classList.add('active');
+
+document.getElementById(
+b.dataset.tab
+).classList.add('active');
+
+if(b.dataset.tab==='moves')
+fillSecuritySelect();
+
+};
+
+});
+
+
+cashDate.value=today();
+secDate.value=today();
+moveDate.value=today();
+
+
+document.getElementById('cashForm').onsubmit=e=>{
+
+e.preventDefault();
+
+const amount=num(cashAmount.value);
+
+if(amount<=0){
+
+alert('Inserisci un importo maggiore di zero.');
+
+return;
+
+}
+
+data.cash.push({
+
+id:uid(),
+date:cashDate.value,
+type:cashType.value,
+desc:cashDesc.value.trim(),
+amount
+
+});
+
+e.target.reset();
+
+cashDate.value=today();
+
+save();
+
+};
+
+
+document.getElementById('secForm').onsubmit=e=>{
+
+e.preventDefault();
+
+const name=secName.value.trim();
+const qty=num(secQty.value);
+const buy=num(secBuy.value);
+const current=num(secCurrent.value);
+
+if(
+!name ||
+qty<0 ||
+buy<0 ||
+current<0
+){
+
+alert('Controlla i dati del titolo.');
+
+return;
+
+}
+
+data.securities.push({
+
+id:uid(),
+name,
+isin:secIsin.value.trim().toUpperCase(),
+qty,
+buy,
+current,
+date:secDate.value
+
+});
+
+e.target.reset();
+
+secDate.value=today();
+
+save();
+
+fillSecuritySelect();
+
+};
+
+
+function fillSecuritySelect(){
+
+const s=document.getElementById('moveSecurity');
+
+s.innerHTML=data.securities.length
+
+?data.securities.map(x=>
+`<option value="${x.id}">
+${esc(x.name)}
+${x.isin?' · '+esc(x.isin):''}
+</option>`
+).join('')
+
+:'<option value="">Nessun titolo</option>';
+
+}
+
+
+document.getElementById('moveType').onchange=
+updateMoveFields;
+
+document.getElementById('moveQty').oninput=
+calcMoveAmount;
+
+document.getElementById('movePrice').oninput=
+calcMoveAmount;
+
+
+function updateMoveFields(){
+
+const t=moveType.value;
+
+moveQty.disabled=
+!(t==='Acquisto'||t==='Vendita');
+
+movePrice.disabled=
+!(t==='Acquisto'||t==='Vendita');
+
+if(
+t==='Dividendo' ||
+t==='Commissione'
+){
+
+moveQty.value='';
+movePrice.value='';
+
+}
+
+calcMoveAmount();
+
+}
+
+
+function calcMoveAmount(){
+
+const t=moveType.value;
+
+if(
+t==='Acquisto' ||
+t==='Vendita'
+){
+
+const q=num(moveQty.value);
+const p=num(movePrice.value);
+
+moveAmount.value=
+q&&p
+?(q*p).toFixed(2)
+:'';
+
+}
+
+}
+
+
+document.getElementById('moveForm').onsubmit=e=>{
+
+e.preventDefault();
+
+const sid=moveSecurity.value;
+const t=moveType.value;
+const q=num(moveQty.value);
+const p=num(movePrice.value);
+const amount=num(moveAmount.value);
+
+const sec=
+data.securities.find(x=>x.id===sid);
+
+if(!sec){
+
+alert('Seleziona un titolo.');
+
+return;
+
+}
+
+if(amount<=0){
+
+alert('Inserisci un importo valido.');
+
+return;
+
+}
+
+if(
+(t==='Acquisto'||t==='Vendita') &&
+q<=0
+){
+
+alert('Inserisci una quantità valida.');
+
+return;
+
+}
+
+
+if(t==='Acquisto'){
+
+const oldQty=sec.qty;
+
+sec.qty+=q;
+
+if(sec.qty>0){
+
+sec.buy=
+(
+(oldQty*sec.buy)+
+(q*p)
+)/
+sec.qty;
+
+}
+
+data.cash.push({
+
+id:uid(),
+date:moveDate.value,
+type:'out',
+desc:`Acquisto ${sec.name}`,
+amount,
+auto:true
+
+});
+
+}
+
+
+else if(t==='Vendita'){
+
+if(q>sec.qty+0.000001){
+
+alert(
+'La quantità da vendere è superiore a quella posseduta.'
+);
+
+return;
+
+}
+
+sec.qty=Math.max(
+0,
+sec.qty-q
+);
+
+data.cash.push({
+
+id:uid(),
+date:moveDate.value,
+type:'in',
+desc:`Vendita ${sec.name}`,
+amount,
+auto:true
+
+});
+
+}
+
+
+else if(t==='Dividendo'){
+
+data.cash.push({
+
+id:uid(),
+date:moveDate.value,
+type:'in',
+desc:`Dividendo ${sec.name}`,
+amount,
+auto:true
+
+});
+
+}
+
+
+else if(t==='Commissione'){
+
+data.cash.push({
+
+id:uid(),
+date:moveDate.value,
+type:'out',
+desc:`Commissione ${sec.name}`,
+amount,
+auto:true
+
+});
+
+}
+
+
+data.movements.push({
+
+id:uid(),
+date:moveDate.value,
+securityId:sid,
+type:t,
+qty:q,
+price:p,
+amount
+
+});
+
+
+e.target.reset();
+
+moveDate.value=today();
+
+fillSecuritySelect();
+
+updateMoveFields();
+
+save();
+
+};
+
+
+function cashBalance(){
+
+return data.cash.reduce(
+
+(a,x)=>
+a+
+(
+x.type==='in'
+?num(x.amount)
+:-num(x.amount)
+),
+
+0
+
+);
+
+}
+
+
+function securitiesValue(){
+
+return data.securities.reduce(
+
+(a,s)=>
+a+
+num(s.qty)*num(s.current),
+
+0
+
+);
+
+}
+
+
+function securitiesCost(){
+
+return data.securities.reduce(
+
+(a,s)=>
+a+
+num(s.qty)*num(s.buy),
+
+0
+
+);
+
+}
+
+
+function render(){
+
+const cv=cashBalance();
+
+const sv=securitiesValue();
+
+const cost=securitiesCost();
+
+const gain=sv-cost;
+
+mCash.textContent=money(cv);
+
+mSecurities.textContent=money(sv);
+
+mTotal.textContent=money(cv+sv);
+
+mGain.textContent=money(gain);
+
+mGain.className=
+'metric '+(gain>=0?'good':'bad');
+
+cashBalance.textContent=money(cv);
+
+mMoves.textContent=data.movements.length;
+
+renderCash();
+
+renderSecurities();
+
+renderMoves();
+
+renderSummary();
+
+renderReturns();
+
+fillSecuritySelect();
+
+}
+
+
+function renderCash(){
+
+if(!data.cash.length){
+
+cashHistory.innerHTML=
+'<div class="empty">Nessun movimento registrato.</div>';
+
+return;
+
+}
+
+const rows=
+[...data.cash]
+.sort((a,b)=>b.date.localeCompare(a.date))
+.map(x=>
+`<tr>
+<td>${fmtDate(x.date)}</td>
+<td>${x.type==='in'?'Entrata':'Uscita'}</td>
+<td>
+${esc(x.desc)}
+${x.auto?
+' <span class="muted">(automatico)</span>':
+''}
+</td>
+<td>${money(x.amount)}</td>
+</tr>`
+).join('');
+
+cashHistory.innerHTML=
+`<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Tipo</th>
+<th>Descrizione</th>
+<th>Importo</th>
+</tr>
+</thead>
+<tbody>
+${rows}
+</tbody>
+</table>`;
+
+}
+
+
+function renderSecurities(){
+
+if(!data.securities.length){
+
+securityTable.innerHTML=
+'<div class="empty">Nessun titolo registrato.</div>';
+
+return;
+
+}
+
+const rows=
+data.securities.map(s=>{
+
+const v=s.qty*s.current;
+
+const c=s.qty*s.buy;
+
+const g=v-c;
+
+const p=c?g/c*100:0;
+
+return `
+<tr>
+
+<td>
+<b>${esc(s.name)}</b>
+<br>
+<span class="muted">
+${esc(s.isin||'')}
+</span>
+</td>
+
+<td>${s.qty}</td>
+
+<td>${money(s.buy)}</td>
+
+<td>${money(s.current)}</td>
+
+<td>${money(v)}</td>
+
+<td class="${g>=0?'good':'bad'}">
+${money(g)}
+<br>
+${p.toFixed(2)}%
+</td>
+
+</tr>`;
+
+}).join('');
+
+securityTable.innerHTML=
+`<table>
+
+<thead>
+<tr>
+<th>Titolo</th>
+<th>Qtà</th>
+<th>Carico</th>
+<th>Attuale</th>
+<th>Valore</th>
+<th>Risultato</th>
+</tr>
+</thead>
+
+<tbody>
+${rows}
+</tbody>
+
+</table>`;
+
+}
+
+
+function renderSummary(){
+
+if(!data.securities.length){
+
+summarySecurities.innerHTML=
+'<div class="empty">Nessun titolo registrato.</div>';
+
+return;
+
+}
+
+summarySecurities.innerHTML=
+`<table>
+
+<thead>
+<tr>
+<th>Titolo</th>
+<th>Valore</th>
+<th>Risultato</th>
+</tr>
+</thead>
+
+<tbody>
+
+${
+data.securities.map(s=>{
+
+const v=s.qty*s.current;
+
+const g=v-s.qty*s.buy;
+
+return `
+<tr>
+<td>${esc(s.name)}</td>
+<td>${money(v)}</td>
+<td class="${g>=0?'good':'bad'}">
+${money(g)}
+</td>
+</tr>`;
+
+}).join('')
+}
+
+</tbody>
+
+</table>`;
+
+}
+
+
+function renderMoves(){
+
+if(!data.movements.length){
+
+moveTable.innerHTML=
+'<div class="empty">Nessun movimento registrato.</div>';
+
+return;
+
+}
+
+const rows=
+[...data.movements]
+.sort((a,b)=>b.date.localeCompare(a.date))
+.map(m=>{
+
+const s=
+data.securities.find(
+x=>x.id===m.securityId
+);
+
+return `
+<tr>
+
+<td>${fmtDate(m.date)}</td>
+
+<td>
+${esc(
+s?s.name:'Titolo eliminato'
+)}
+</td>
+
+<td>${esc(m.type)}</td>
+
+<td>${m.qty||''}</td>
+
+<td>
+${m.price?money(m.price):''}
+</td>
+
+<td>${money(m.amount)}</td>
+
+</tr>`;
+
+}).join('');
+
+moveTable.innerHTML=
+`<table>
+
+<thead>
+
+<tr>
+<th>Data</th>
+<th>Titolo</th>
+<th>Tipo</th>
+<th>Qtà</th>
+<th>Prezzo</th>
+<th>Importo</th>
+</tr>
+
+</thead>
+
+<tbody>
+${rows}
+</tbody>
+
+</table>`;
+
+}
+
+
+/*
+ Calcolo indicativo dei rendimenti.
+ La versione futura potrà usare vere fotografie
+ storiche del portafoglio per un calcolo più preciso.
+*/
+
+function renderReturns(){
+
+[3,6,12].forEach(months=>{
+
+const el=
+document.getElementById('r'+months);
+
+const r=
+estimateReturn(months);
+
+if(Number.isFinite(r)){
+
+el.textContent=
+(r>=0?'+':'')+
+r.toFixed(2)+'%';
+
+el.className=
+'metric '+(r>=0?'good':'bad');
+
+}else{
+
+el.textContent='—';
+
+el.className='metric';
+
+}
+
+});
+
+}
+
+
+function estimateReturn(months){
+
+const end=new Date();
+
+const start=new Date(end);
+
+start.setMonth(
+start.getMonth()-months
+);
+
+const startMs=start.getTime();
+
+const relevant=
+data.movements.filter(
+m=>
+new Date(
+m.date+'T23:59:59'
+).getTime()>=startMs
+);
+
+if(!relevant.length)
+return NaN;
+
+let flows=0;
+
+relevant.forEach(m=>{
+
+if(m.type==='Acquisto')
+flows-=num(m.amount);
+
+if(m.type==='Vendita')
+flows+=num(m.amount);
+
+if(m.type==='Dividendo')
+flows+=num(m.amount);
+
+if(m.type==='Commissione')
+flows-=num(m.amount);
+
+});
+
+const current=
+cashBalance()+
+securitiesValue();
+
+const cashRecent=
+data.cash
+.filter(
+c=>
+new Date(
+c.date+'T23:59:59'
+).getTime()>=startMs
+)
+.reduce(
+
+(a,c)=>
+a+
+(
+c.type==='in'
+?num(c.amount)
+:-num(c.amount)
+),
+
+0
+
+);
+
+const previous=
+current-
+cashRecent-
+flows;
+
+if(previous<=0)
+return NaN;
+
+return(
+(current-previous-flows)/
+previous
+)*100;
+
+}
+
+
+function exportData(){
+
+const blob=
+new Blob(
+[
+JSON.stringify(data,null,2)
+],
+{
+type:'application/json'
+}
+);
+
+const a=
+document.createElement('a');
+
+a.href=
+URL.createObjectURL(blob);
+
+a.download=
+'PortafoglioMio-backup.json';
+
+a.click();
+
+URL.revokeObjectURL(a.href);
+
+}
+
+
+function importData(e){
+
+const f=e.target.files[0];
+
+if(!f)return;
+
+const r=new FileReader();
+
+r.onload=()=>{
+
+try{
+
+const x=
+JSON.parse(r.result);
+
+if(
+!x ||
+!Array.isArray(x.cash) ||
+!Array.isArray(x.securities) ||
+!Array.isArray(x.movements)
+)
+throw Error();
+
+data=x;
+
+save();
+
+alert(
+'Dati importati correttamente.'
+);
+
+}catch(err){
+
+alert(
+'File non valido.'
+);
+
+}
+
+};
+
+r.readAsText(f);
+
+}
+
+
+function resetAll(){
+
+if(
+confirm(
+'Vuoi cancellare definitivamente tutti i dati presenti su questo dispositivo?'
+)
+){
+
+data={
+cash:[],
+securities:[],
+movements:[]
+};
+
+save();
+
+}
+
+}
+
+
+render();
+
+updateMoveFields();
+
 </script>
+
 </body>
 </html>
