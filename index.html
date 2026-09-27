@@ -1236,16 +1236,6 @@ ${rows}
 </table>`;
 
 }
-
-
-function renderSummary(){
-
-if(!data.securities.length){
-
-summarySecurities.innerHTML=
-'<div class="empty">Nessun titolo registrato.</div>';
-
-return;
 function editSecurity(id){
 
   const s=data.securities.find(x=>x.id===id);
@@ -1266,6 +1256,16 @@ function editSecurity(id){
 
   save();
   render();
+
+function renderSummary(){
+
+if(!data.securities.length){
+
+summarySecurities.innerHTML=
+'<div class="empty">Nessun titolo registrato.</div>';
+
+return;
+
 
 }
 }
