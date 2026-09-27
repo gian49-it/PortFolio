@@ -1206,8 +1206,13 @@ ${money(g)}
 ${p.toFixed(2)}%
 </td>
 
-</tr>`;
+<td>
+<button type="button" onclick="editSecurity('${s.id}')">
+Modifica
+</button>
+</td>
 
+</tr>`;
 }).join('');
 
 securityTable.innerHTML=
@@ -1241,7 +1246,28 @@ summarySecurities.innerHTML=
 '<div class="empty">Nessun titolo registrato.</div>';
 
 return;
+function editSecurity(id){
 
+  const s=data.securities.find(x=>x.id===id);
+
+  if(!s){
+    alert('Titolo non trovato.');
+    return;
+  }
+
+  const newName=prompt('Nome titolo:',s.name);
+  if(newName===null) return;
+
+  const newIsin=prompt('ISIN:',s.isin || '');
+  if(newIsin===null) return;
+
+  s.name=newName.trim();
+  s.isin=newIsin.trim().toUpperCase();
+
+  save();
+  render();
+
+}
 }
 
 summarySecurities.innerHTML=
@@ -1252,6 +1278,7 @@ summarySecurities.innerHTML=
 <th>Titolo</th>
 <th>Valore</th>
 <th>Risultato</th>
+<th>Azioni</th>
 </tr>
 </thead>
 
