@@ -845,25 +845,23 @@ calcMoveAmount();
 
 function calcMoveAmount(){
 
-const t=moveType.value;
+  const type=document.getElementById('moveType').value;
+  const qty=document.getElementById('moveQty');
+  const price=document.getElementById('movePrice');
+  const amount=document.getElementById('moveAmount');
 
-if(
-t==='Acquisto' ||
-t==='Vendita'
-){
+  if(type==='Acquisto' || type==='Vendita'){
 
-const q=num(moveQty.value);
-const p=num(movePrice.value);
+    const q=num(qty.value);
+    const p=num(price.value);
 
-moveAmount.value=
-q&&p
-?(q*p).toFixed(2)
-:'';
+    amount.value=(q>0 && p>0)
+      ?(q*p).toFixed(2)
+      :'';
+
+  }
 
 }
-
-}
-
 
 document.getElementById('moveForm').onsubmit=e=>{
 
